@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    #orientation: columns
+    #vertical_layout: fill
+    vertical_layout: scroll
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(plotly)
+```
+
+ROW
+-----------------------------------------------------------------------
+
+### Top 10 countries based on total runs
+```{r}
+setwd("D:/datasets")
+
+odi=read.csv(file="odi-batting.csv")
+
+top10=odi %>% group_by(Country) %>% summarise(total_runs=n()) %>% arrange(-total_runs) %>% head(10)
+
+
+g=ggplot(top10,aes(x=reorder(Country,total_runs),y=total_runs,fill=Country)) + geom_bar(stat='identity')
+
+ggplotly(g)
+```
+
+### top 10countries based on total no of players
+```{r}
+players= odi %>% group_by(Country) %>% summarise(no_player=n_distinct(Player)) %>% arrange(-no_player) %>% head(10)
+
+g=ggplot(players,aes(x=reorder(Country,no_player),y=no_player,fill=Country))+ geom_bar(stat='identity')
+
+ggplotly(g)
+```
+
+ROW
+-----------------------------------------------------------
+### chart E
+
+### chart F
+
+ROW
+-----------------------------------------------------------------------
+
+### Chart C
+
+### Chart D
+
+
+

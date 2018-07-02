@@ -1,0 +1,86 @@
+---
+title: "gganimate"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#install.packages("devtools")
+#devtools::install_github("dgrtwo/gganimate")
+library(gganimate)
+library(animation)
+library(dplyr)
+```
+
+
+```{r}
+players=c('Sachin R Tendulkar', 'Rahul Dravid', 'Ashish Nehra')
+odi_subset=odi %>% filter(Player %in% players)
+
+unique(odi_subset$Player)
+
+#to get the path
+Sys.setenv(PATH=paste("C:/Program Files/ImageMagick-7.0.7-Q16/",Sys.getenv("PATH"),sep=";"))
+
+magickpath<- shortPathName("C:/Program Files/ImageMagick-7.0.7-Q16/magick.exe")
+
+ani.options(convert=magickpath)
+
+g=ggplot(odi_subset,aes(x=Runs,y=ScoreRate,frame=Player))+geom_point()
+gganimate(g)
+```
+
+#find sachine year wise score
+
+```{r}
+odi$Date = as.Date(odi$MatchDate, format="%m-%d-%Y")
+odi$year = format(odi$Date, '%Y')
+sachin=odi %>% filter(Player=='Sachin R Tendulkar')
+
+Sys.setenv(PATH=paste("C:/Program Files/ImageMagick-7.0.7-Q16/",Sys.getenv("PATH"),sep=";"))
+
+magickpath<- shortPathName("C:/Program Files/ImageMagick-7.0.7-Q16/magick.exe")
+
+ani.options(convert=magickpath)
+
+g=ggplot(sachin,aes(x=Runs,y=ScoreRate,frame=year,color=year))+geom_point()
+gganimate(g)
+
+```
+
+```{r}
+#install.packages('gapminder')
+library(gapminder)
+  View(gapminder)
+  
+  p<-ggplot(gapminder,aes(x=gdpPercap,y=lifeExp,size=pop,color=continent,frame=year))+geom_point()+scale_x_log10()
+  
+  gganimate(p)
+  
+  gganimate(p,"output.gif")
+```
+
+```{r}
+
+install.packages('ggmap')
+library(ggmap)
+places=c('Bangalore','Mumbai','Tamilnadu')
+location=geocode(places)
+location$places=places
+location
+
+```
+
+
+```{r}
+
+par_state=as.character(parliament$STATE)
+places=unique(par_state)
+location=geocode(places)
+location$places=places
+location
+```
+
+
+
+
+

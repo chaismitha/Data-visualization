@@ -1,0 +1,70 @@
+---
+title: "shiny-dashboard"
+runtime: shiny
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+Sidebar {.sidebar}
+============================
+```{r}
+textInput(inputId = "text_name",label = "Enter some text here")
+selectInput(inputId = "select_country", label ="select a country", choices = c('India','Pakistan','Australia'))
+
+dateInput(inputId = "select_date", label = "select starting date", startview = "year")
+
+sliderInput(inputId = "select_bin", label = "Select a bin",min=0,max=10,value = 5)
+```
+
+Dashboard {.text}
+============================
+
+Row
+--------------------------
+
+### Output
+
+```{r}
+#render to display the txt which given,input is a variable which hold all variables which user can select..text_name is where we given for inputid
+renderText({input$text_name})
+
+```
+
+### Output
+```{r}
+renderText({input$select_country})
+```
+
+Row
+---------------------
+
+### Output
+
+```{r}
+renderText({input$select_bin})
+```
+
+### Date output
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
